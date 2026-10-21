@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    background: theme("colors.linen");
+    color: theme("colors.ink.DEFAULT");
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-linen font-sans text-[15px] leading-relaxed text-ink antialiased;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: theme("colors.wing.DEFAULT");
+    color: theme("colors.linen");
+  }
+
+  :focus-visible {
+    outline: 1.5px solid theme("colors.wing.DEFAULT");
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif font-light;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+}
+
+@layer components {
+  .label {
+    @apply font-sans text-label font-medium uppercase;
+  }
+
+  .frame {
+    @apply mx-auto w-full max-w-frame px-gutter;
+  }
+
+  /* Italic accents always use the true italic cut (loaded separately, see layout.tsx). */
+  .italic {
+    font-family: var(--font-serif-italic), Georgia, serif;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+
+  /* Underline that draws in from the start on hover */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-draw:hover,
+  .link-draw:focus-visible {
+    background-size: 100% 1px;
+  }
+  [dir="rtl"] .link-draw {
+    background-position: 100% 100%;
+  }
+}
+
+/* Film grain — a fixed, static noise layer. Cheap: one composited layer, no animation. */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.14  0 0 0 0 0.12  0 0 0 0 0.12  0 0 0 1.1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hide native cursor only where the custom cursor is active */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+/* Horizontal swipe rail on touch screens */
+.rail {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Returning visitors: the intro script marks <html> before paint, so the loader never flashes. */
+html[data-intro="seen"] .intro {
+  display: none;
+}
+
+/* Text ribbon */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.marquee {
+  animation: marquee 60s linear infinite;
+}
+[dir="rtl"] .marquee {
+  animation-direction: reverse;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
+
+/*
+ * Load-time reveals run in CSS, not JS, so above-the-fold headings and photos
+ * appear at first paint instead of waiting for hydration (better LCP).
+ * --d is each element's delay. First visits add the intro loader's duration.
+ */
+@keyframes rise {
+  from {
+    transform: translate3d(0, 110%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes drop {
+  from {
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.css-rise,
+.css-drop,
+.css-settle,
+.css-fade {
+  animation-duration: 1.2s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--d, 0s);
+}
+.css-rise {
+  animation-name: rise;
+}
+.css-drop {
+  animation-name: drop;
+}
+.css-settle {
+  animation-name: settle;
+  animation-duration: 2.2s;
+}
+.css-fade {
+  animation-name: fade-in;
+}
+html:not([data-intro="seen"]) .after-intro {
+  animation-delay: calc(var(--d, 0s) + 1.05s);
+}
+
+/* Safety net: if scripts never run, the loader still gets out of the way. */
+@keyframes intro-away {
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+.intro {
+  animation: intro-away 0.4s 3.5s forwards;
+}
+@keyframes wipe {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+.css-wipe {
+  animation: wipe 1.25s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+@keyframes lift {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 32px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.css-lift {
+  animation: lift 1.3s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+html:not([data-intro="seen"]) .css-lift.after-intro {
+  animation-delay: calc(var(--d, 0s) + 1.05s);
+}
+
+/*
+ * Butterfly — the logo butterfly split into two wings that flap in 3D around
+ * the body. Transform-only. "fly" = quick beats, "rest" = an occasional slow
+ * open-and-close, "still" = no motion (reduced-motion visitors).
+ */
+.bf {
+  position: relative;
+  aspect-ratio: 319 / 238;
+  perspective: 260px;
+  transform-style: preserve-3d;
+}
+.bf > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 54.55% 45.56%;
+  backface-visibility: visible;
+  user-select: none;
+}
+.bf-wing-l {
+  animation: bf-flap-l 0.22s ease-in-out infinite alternate;
+}
+.bf-wing-r {
+  animation: bf-flap-r 0.22s ease-in-out infinite alternate;
+}
+.bf[data-state="rest"] .bf-wing-l {
+  animation: bf-rest-l 5s ease-in-out infinite;
+}
+.bf[data-state="rest"] .bf-wing-r {
+  animation: bf-rest-r 5s ease-in-out infinite;
+}
+.bf[data-state="still"] > img {
+  animation: none;
+}
+@keyframes bf-flap-l {
+  from {
+    transform: rotateY(-6deg);
+  }
+  to {
+    transform: rotateY(74deg);
+  }
+}
+@keyframes bf-flap-r {
+  from {
+    transform: rotateY(6deg);
+  }
+  to {
+    transform: rotateY(-74deg);
+  }
+}
+@keyframes bf-rest-l {
+  0%, 60%, 100% { transform: rotateY(0deg); }
+  67% { transform: rotateY(60deg); }
+  74% { transform: rotateY(8deg); }
+  81% { transform: rotateY(48deg); }
+  90% { transform: rotateY(0deg); }
+}
+@keyframes bf-rest-r {
+  0%, 60%, 100% { transform: rotateY(0deg); }
+  67% { transform: rotateY(-60deg); }
+  74% { transform: rotateY(-8deg); }
+  81% { transform: rotateY(-48deg); }
+  90% { transform: rotateY(0deg); }
+}

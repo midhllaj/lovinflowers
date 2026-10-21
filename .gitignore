@@ -1,0 +1,13 @@
+node_modules
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+.vercel
+
+# Original photo/logo source files (the site uses the cleaned copies in /public).
+# Kept out of the repo: they're large and phone photos can carry GPS location data.
+/IMG_*
+/WhatsApp Image*
+/Logo.pdf
