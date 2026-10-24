@@ -103,6 +103,58 @@ or hotel lobbies, drop them into `public/images/` and replace the matching `src`
 
 ---
 
+## "Design your own bouquet" builder (/design)
+
+Customers pick a shape (Classic, Dome, Heart), paint flowers into the bouquet, choose the
+wrapping paper and colour, add a ribbon message, fillers and toppers, then send the whole order
+to your WhatsApp number with a picture of their design. Their design is saved in their browser,
+so a refresh doesn't lose it.
+
+Everything the builder offers is listed in **`data/builder.ts`**. Images live in:
+
+```
+public/builder/flowers/    flower heads, seen from directly above
+public/builder/wrapping/   wrapping paper laid flat
+public/builder/fillers/    eucalyptus, baby's breath…
+public/builder/toppers/    teddy bears, plush toys, decorations
+```
+
+The images there now are drawn placeholders, so the builder works today.
+
+### Add or replace an item
+
+1. Save the photo as a **transparent PNG** (background removed), roughly square, about
+   600 × 600px. Name it after the item: `red-rose-1.png`, `red-rose-2.png`…
+2. Put it in the matching folder above.
+3. In `data/builder.ts`, point the item's `images` at the new files. For example:
+   ```ts
+   { id: "red-rose", name: "Red rose", category: "flower", swatch: "#B5122C",
+     images: img("flowers", "red-rose-1.png", "red-rose-2.png", "red-rose-3.png") },
+   ```
+   Several images of the same flower are mixed at random, so the bouquet looks natural.
+4. To add a brand-new flower, copy an entry and give it a new `id` (lowercase, dashes).
+   `scale` makes one flower bigger or smaller than a rose (e.g. `1.2` for hydrangea).
+
+### Wrapping paper
+
+Wrapping images should be **white or very light grey**: the colour the customer picks is tinted
+onto the paper. Photograph white paper and let the builder colour it. The preset colours are
+`paperColours` in `data/builder.ts`.
+
+### What to photograph to replace the placeholders
+
+- **Flowers:** one head of each flower (red, pink, white and peach rose, sunflower, tulip, lily,
+  hydrangea, carnation, chrysanthemum), shot straight down from above on a plain background, in
+  soft daylight, with no harsh shadow. Take 2–3 different heads per flower for variety.
+- **Wrapping:** your white wrapping papers (matte, tissue, pearl, kraft-textured) arranged as a
+  collar, shot straight down, so the centre is empty where the flowers go.
+- **Fillers:** a sprig of eucalyptus and a cluster of baby's breath, laid flat, from above.
+- **Toppers:** each teddy bear or plush toy you sell, from the front, on a plain background.
+
+Remove the backgrounds (any background-remover app works) and save as PNG.
+
+---
+
 ## Edit text
 
 All page copy is in **`content/en.ts`**. Product text is in `data/products.ts`.
@@ -165,6 +217,9 @@ lib/whatsapp.ts         builds WhatsApp links and messages
 public/images/          photos
 public/logo/            logo files
 public/butterfly/       the logo butterfly split into wings, for the home page animation
+public/builder/         images for the bouquet builder (see data/builder.ts)
+components/builder/     the bouquet builder (canvas, panels, review)
+lib/builder/            builder shapes, saved state, undo/redo, WhatsApp message
 ```
 
 ## Motion and accessibility

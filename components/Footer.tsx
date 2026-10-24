@@ -44,6 +44,7 @@ export function Footer() {
             <ul className="space-y-2.5">
               {[
                 ["/collection", copy.nav.collection],
+                ["/design", copy.nav.design],
                 ["/events", copy.nav.events],
                 ["/about", copy.nav.about],
                 ["/contact", copy.nav.contact],

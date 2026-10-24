@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { copy } from "@/content/en";
 import { site } from "@/config/site";
 import { hasWhatsApp, openWhatsApp, productMessage, whatsappLink } from "@/lib/whatsapp";
@@ -68,6 +69,8 @@ export function EnquireButton({
 
 /** Small round button fixed to the bottom corner of every page. */
 export function WhatsAppFloat() {
+  // The builder has its own sticky bar, so the floating button would only cover it.
+  if (usePathname() === "/design") return null;
   return (
     <WhatsAppLink
       message={copy.whatsapp.generalMessage}

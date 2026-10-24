@@ -62,7 +62,7 @@ export function CollectionGrid() {
   return (
     <section className="frame pb-section" aria-label={copy.collection.label}>
       {/* Filters */}
-      <div className="sticky top-[46px] z-30 -mx-gutter border-y border-line bg-linen/95 px-gutter py-4 sm:top-[62px]">
+      <div className="sticky top-[68px] z-30 -mx-gutter border-y border-line bg-linen/95 px-gutter py-4 sm:top-[76px]">
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between xl:gap-10">
           <div className="flex items-center gap-4">
             <span className="label w-20 shrink-0 text-ink-soft">{copy.collection.type}</span>

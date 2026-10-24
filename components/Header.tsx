@@ -12,6 +12,7 @@ import { WhatsAppLink } from "./WhatsApp";
 
 const links = [
   { href: "/collection", label: copy.nav.collection },
+  { href: "/design", label: copy.nav.design },
   { href: "/events", label: copy.nav.events },
   { href: "/about", label: copy.nav.about },
   { href: "/contact", label: copy.nav.contact },
@@ -68,7 +69,7 @@ export function Header() {
             </span>
           </Link>
 
-          <nav aria-label="Main" className="hidden items-center gap-10 lg:flex">
+          <nav aria-label="Main" className="hidden items-center gap-7 lg:flex xl:gap-10">
             {links.map((l) => (
               <Link
                 key={l.href}

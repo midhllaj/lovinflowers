@@ -7,6 +7,7 @@ import { EventsTeaser } from "@/components/home/EventsTeaser";
 import { Gallery } from "@/components/home/Gallery";
 import { DriftButterfly } from "@/components/home/Butterfly";
 import { Reviews } from "@/components/home/Reviews";
+import { DesignYourOwn } from "@/components/home/DesignYourOwn";
 import { floristJsonLd } from "@/lib/jsonld";
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
       <Hero />
       <Occasions />
       <Featured />
+      <DesignYourOwn />
       <Story />
       {/* overflow-x-clip: the butterfly may fly past the screen edge without widening the page on phones */}
       <div className="relative overflow-x-clip">

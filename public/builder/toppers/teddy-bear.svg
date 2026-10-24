@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><defs><radialGradient id="fur" cx="50%" cy="50%" r="50%" fx="40%" fy="35%"><stop offset="0" stop-color="#C99566"/><stop offset="1" stop-color="#93623A"/></radialGradient></defs>
+<ellipse cx="150" cy="212" rx="70" ry="66" fill="url(#fur)"/>
+<circle cx="92" cy="248" r="24" fill="url(#fur)"/><circle cx="208" cy="248" r="24" fill="url(#fur)"/>
+<circle cx="88" cy="176" r="20" fill="url(#fur)"/><circle cx="212" cy="176" r="20" fill="url(#fur)"/>
+<ellipse cx="150" cy="222" rx="38" ry="34" fill="#E2BE95"/>
+<circle cx="96" cy="70" r="26" fill="url(#fur)"/><circle cx="204" cy="70" r="26" fill="url(#fur)"/>
+<circle cx="96" cy="70" r="13" fill="#E2BE95"/><circle cx="204" cy="70" r="13" fill="#E2BE95"/>
+<circle cx="150" cy="112" r="64" fill="url(#fur)"/>
+<ellipse cx="150" cy="134" rx="28" ry="22" fill="#E8C9A3"/>
+<ellipse cx="150" cy="124" rx="10" ry="7" fill="#3A2416"/>
+<path d="M150 131 v10 M140 145 q10 7 20 0" stroke="#3A2416" stroke-width="3" fill="none" stroke-linecap="round"/>
+<circle cx="124" cy="100" r="6.5" fill="#22150C"/><circle cx="176" cy="100" r="6.5" fill="#22150C"/>
+<circle cx="126" cy="98" r="2" fill="#fff"/><circle cx="178" cy="98" r="2" fill="#fff"/>
+<path d="M118 172 l32 14 l32 -14 l-6 26 l-26 -10 l-26 10z" fill="#9C2A35"/><circle cx="150" cy="184" r="8" fill="#7A1E28"/>
+</svg>
